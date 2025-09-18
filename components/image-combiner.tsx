@@ -191,7 +191,7 @@ export function ImageCombiner() {
     setPrompt(
       newMode === "text-to-image"
         ? "A beautiful landscape with mountains and a lake at sunset"
-        : "Edit these images to create a cohesive artistic composition",
+        : "Combine these images into a artistic masterpiece with vibrant colors and creative composition",
     )
     setGeneratedImage(null)
     if (newMode === "text-to-image") {

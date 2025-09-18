@@ -13,9 +13,9 @@ Share & Download: Instantly share or save your creations.
 Fun, Playful Interface: Art meets bananas—explore your imagination in a whimsical gallery.
 
 ## 🛠 Tech Stack
-Frontend: TypeScript
+Frontend: Next, TypeScript
 
-Styling: CSS
+Styling: Tailwind CSS
 
 Additional: (mention any libraries/frameworks like React/Next.js, or tools like Tailwind, if relevant)
 

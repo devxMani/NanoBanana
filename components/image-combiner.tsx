@@ -349,7 +349,7 @@ export function ImageCombiner() {
         <div className="max-w-6xl w-full">
           <div className="bg-black/70 backdrop-blur-sm border-0 p-8 h-full rounded-xl">
             <div className="mb-8 flex items-center justify-between">
-              <h1 className="text-2xl font-bold text-white font-mono tracking-wider">Nano Banana</h1>
+              <h1 className="text-2xl font-bold text-white font-mono tracking-wider">Pixel Banana</h1>
               <Link href="/">
                 <Button 
                   variant="outline" 

@@ -17,36 +17,26 @@ export async function POST(request: NextRequest) {
     }
 
     if (mode === "text-to-image") {
-      console.log("API: Using Hugging Face Stable Diffusion")
+      console.log("API: Using Pollinations.ai (completely free, no API key needed)")
 
-      // Using Hugging Face Inference API (Free)
-      const response = await fetch(
-        "https://api-inference.huggingface.co/models/stabilityai/stable-diffusion-xl-base-1.0",
-        {
-          headers: {
-            "Authorization": `Bearer ${process.env.HUGGINGFACE_API_KEY}`,
-            "Content-Type": "application/json",
-          },
-          method: "POST",
-          body: JSON.stringify({
-            inputs: prompt,
-            options: {
-              wait_for_model: true,
-            }
-          }),
+      // Using Pollinations.ai - completely free, no API key required
+      const imageUrl = `https://image.pollinations.ai/prompt/${encodeURIComponent(prompt)}?width=512&height=512&nologo=true&enhance=true`
+      
+      console.log("API: Generated image URL:", imageUrl)
+
+      // Test if the image URL is accessible
+      try {
+        const testResponse = await fetch(imageUrl, { method: 'HEAD' })
+        if (!testResponse.ok) {
+          throw new Error(`Image generation failed: ${testResponse.status}`)
         }
-      )
-
-      if (!response.ok) {
-        throw new Error(`Hugging Face API error: ${response.status}`)
+      } catch (error) {
+        console.error("API: Error testing image URL:", error)
+        return NextResponse.json({
+          error: "Failed to generate image",
+          details: "Image service unavailable"
+        }, { status: 500 })
       }
-
-      const imageBlob = await response.blob()
-      const imageBuffer = await imageBlob.arrayBuffer()
-      const base64Image = Buffer.from(imageBuffer).toString('base64')
-      const imageUrl = `data:image/jpeg;base64,${base64Image}`
-
-      console.log("API: Image generated successfully")
 
       return NextResponse.json({
         url: imageUrl,
@@ -54,9 +44,8 @@ export async function POST(request: NextRequest) {
         description: `Generated image for: ${prompt}`,
       })
     } else if (mode === "image-editing") {
-      // For image editing, we'll use a simpler approach or different service
       return NextResponse.json(
-        { error: "Image editing not yet implemented with free service" }, 
+        { error: "Image editing not yet implemented" }, 
         { status: 501 }
       )
     } else {

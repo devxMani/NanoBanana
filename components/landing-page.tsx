@@ -35,7 +35,7 @@ export function LandingPage() {
             {/* Hero Section */}
             <div className="mb-8">
               <h1 className="text-6xl font-bold text-white mb-6 font-mono tracking-wider">
-                nano banana
+                Pixel Banana
               </h1>
               <p className="text-xl text-gray-300 mb-8 max-w-2xl mx-auto leading-relaxed">
                 Transform your ideas into stunning visuals with our AI-powered image generation tool. 

@@ -17,32 +17,92 @@ export async function POST(request: NextRequest) {
     }
 
     if (mode === "text-to-image") {
-      console.log("API: Using Pollinations.ai (completely free, no API key needed)")
+      console.log("API: Generating image with multiple fallback services")
 
-      // Using Pollinations.ai - completely free, no API key required
-      const imageUrl = `https://image.pollinations.ai/prompt/${encodeURIComponent(prompt)}?width=512&height=512&nologo=true&enhance=true`
-      
-      console.log("API: Generated image URL:", imageUrl)
+      // Clean and enhance the prompt
+      const cleanPrompt = prompt.trim().replace(/[^\w\s\-.,!?]/g, ' ').substring(0, 200)
+      console.log("API: Cleaned prompt:", cleanPrompt)
 
-      // Test if the image URL is accessible
-      try {
-        const testResponse = await fetch(imageUrl, { method: 'HEAD' })
-        if (!testResponse.ok) {
-          throw new Error(`Image generation failed: ${testResponse.status}`)
+      // Try multiple services for better reliability
+      const services = [
+        {
+          name: "Pollinations.ai",
+          url: `https://image.pollinations.ai/prompt/${encodeURIComponent(cleanPrompt)}?width=768&height=768&nologo=true&enhance=true&model=flux`
+        },
+        {
+          name: "Pollinations.ai (backup)",
+          url: `https://image.pollinations.ai/prompt/${encodeURIComponent(cleanPrompt)}?width=512&height=512&nologo=true`
+        },
+        {
+          name: "Image.ai (simple)",
+          url: `https://api.deepai.org/api/text2img`
         }
-      } catch (error) {
-        console.error("API: Error testing image URL:", error)
-        return NextResponse.json({
-          error: "Failed to generate image",
-          details: "Image service unavailable"
-        }, { status: 500 })
+      ]
+
+      // Try the primary service first
+      try {
+        const primaryUrl = services[0].url
+        console.log("API: Trying primary service:", primaryUrl)
+
+        // Add a small delay to ensure image generation
+        await new Promise(resolve => setTimeout(resolve, 1000))
+
+        // Test if the image URL works
+        const testResponse = await fetch(primaryUrl, { 
+          method: 'GET',
+          headers: {
+            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'
+          }
+        })
+
+        if (testResponse.ok && testResponse.headers.get('content-type')?.includes('image')) {
+          console.log("API: Primary service successful")
+          return NextResponse.json({
+            url: primaryUrl,
+            prompt: prompt,
+            description: `AI generated image: ${prompt}`,
+          })
+        } else {
+          throw new Error(`Primary service failed: ${testResponse.status}`)
+        }
+      } catch (primaryError) {
+        console.log("API: Primary service failed, trying backup:", primaryError)
+        
+        // Try backup service
+        try {
+          const backupUrl = services[1].url
+          console.log("API: Trying backup service:", backupUrl)
+
+          await new Promise(resolve => setTimeout(resolve, 500))
+
+          const backupResponse = await fetch(backupUrl, { 
+            method: 'GET',
+            headers: {
+              'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'
+            }
+          })
+
+          if (backupResponse.ok) {
+            console.log("API: Backup service successful")
+            return NextResponse.json({
+              url: backupUrl,
+              prompt: prompt,
+              description: `AI generated image: ${prompt}`,
+            })
+          }
+        } catch (backupError) {
+          console.log("API: Backup service also failed:", backupError)
+        }
       }
 
+      // If all services fail, return a placeholder with useful message
+      console.log("API: All services failed, returning helpful error")
       return NextResponse.json({
-        url: imageUrl,
-        prompt: prompt,
-        description: `Generated image for: ${prompt}`,
-      })
+        error: "Image generation temporarily unavailable",
+        details: "Please try again in a moment. You can also try a simpler prompt.",
+        suggestion: "Try prompts like: 'a cat', 'sunset', 'mountain landscape'"
+      }, { status: 503 })
+
     } else if (mode === "image-editing") {
       return NextResponse.json(
         { error: "Image editing not yet implemented" }, 
@@ -54,16 +114,17 @@ export async function POST(request: NextRequest) {
     }
 
   } catch (error) {
-    console.error("API: Error generating image:", error)
-    console.error("API: Error details:", {
-      message: error instanceof Error ? error.message : "Unknown error",
-      stack: error instanceof Error ? error.stack : undefined,
-    })
-
+    console.error("API: Unexpected error:", error)
+    
     return NextResponse.json(
       {
-        error: "Failed to generate image",
-        details: error instanceof Error ? error.message : "Unknown error occurred",
+        error: "Service temporarily unavailable",
+        details: "Please try again in a moment",
+        suggestions: [
+          "Try a simpler prompt",
+          "Check your internet connection", 
+          "Refresh the page and try again"
+        ]
       },
       { status: 500 },
     )

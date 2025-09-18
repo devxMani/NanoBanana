@@ -228,26 +228,20 @@ export function ImageCombiner() {
     const progressInterval = setInterval(() => {
       setProgress((prev) => {
         if (prev >= 96) {
-          // Very slow progress after 96% to add more time
           return Math.min(prev + 0.1, 98)
         } else if (prev >= 90) {
-          // Slower after 90%
           return prev + 0.3
         } else if (prev >= 75) {
-          // Moderate speed between 75-90%
           return prev + 0.6
         } else if (prev >= 50) {
-          // Good speed in middle range
           return prev + 0.9
         } else if (prev >= 25) {
-          // Moderate initial progress
           return prev + 1.1
         } else {
-          // Faster initial progress
           return prev + 1.3
         }
       })
-    }, 100) // Slightly longer interval for more duration
+    }, 120)
 
     try {
       const formData = new FormData()
@@ -269,32 +263,60 @@ export function ImageCombiner() {
         body: formData,
       })
 
-      if (!response.ok) {
-        const errorText = await response.text()
-        throw new Error(`Failed to generate image: ${response.status} - ${errorText}`)
-      }
-
       const data = await response.json()
+      
       clearInterval(progressInterval)
 
+      if (!response.ok) {
+        // Better error handling with user-friendly messages
+        let errorMessage = "Failed to generate image"
+        
+        if (data.error) {
+          errorMessage = data.error
+        }
+        
+        if (data.suggestions && Array.isArray(data.suggestions)) {
+          errorMessage += "\n\nSuggestions:\n" + data.suggestions.map((s: string) => `• ${s}`).join("\n")
+        } else if (data.suggestion) {
+          errorMessage += `\n\nSuggestion: ${data.suggestion}`
+        }
+
+        throw new Error(errorMessage)
+      }
+
+      // Smooth progress completion
       setProgress(99)
-      await new Promise((resolve) => setTimeout(resolve, 1000))
+      await new Promise((resolve) => setTimeout(resolve, 800))
       setProgress(100)
 
-      await preloadImage(data.url)
-      setImageLoaded(true)
+      // Preload image for smooth display
+      if (data.url) {
+        await preloadImage(data.url)
+        setImageLoaded(true)
+        
+        // Add a small delay for smooth transition
+        await new Promise((resolve) => setTimeout(resolve, 300))
+      }
 
       setGeneratedImage(data)
       setIsLoading(false)
       setShowAnimation(false)
       setProgress(0)
+
+      // Success feedback
+      console.log("✅ Image generated successfully!")
+      
     } catch (error) {
       clearInterval(progressInterval)
       setProgress(0)
       setShowAnimation(false)
-      console.error("Error generating image:", error)
-      alert(`Error: ${error instanceof Error ? error.message : "Unknown error occurred"}`)
       setIsLoading(false)
+      
+      console.error("Error generating image:", error)
+      
+      // Show user-friendly error message
+      const errorMessage = error instanceof Error ? error.message : "Unknown error occurred"
+      alert(`⚠️ ${errorMessage}`)
     }
   }
 

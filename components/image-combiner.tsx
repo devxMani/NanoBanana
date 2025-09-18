@@ -700,8 +700,26 @@ export function ImageCombiner() {
 
             <div className="mt-6 pt-4 border-t border-gray-600/50">
               <div className="flex items-center justify-center">
-                <div className="text-lg text-gray-400 font-light tracking-wide">
-                  Made by Mani
+                <div className="text-lg text-gray-400 font-light tracking-wide group cursor-default">
+                  <span className="relative inline-block hover:text-white transition-all duration-500 hover:scale-105">
+                    Made by Mani
+                    
+                    {/* Base glow layer */}
+                    <span className="absolute left-0 bottom-0 w-full h-0.5 bg-yellow-400/20 animate-[glow-pulse_2s_ease-in-out_infinite]"></span>
+                    
+                    {/* Flowing gradient layer */}
+                    <span className="absolute left-0 bottom-0 w-full h-0.5 overflow-hidden rounded-full">
+                      <span className="absolute inset-0 w-full bg-gradient-to-r from-transparent via-yellow-400 to-transparent animate-[flowing_2.5s_ease-in-out_infinite]"></span>
+                    </span>
+                    
+                    {/* Shimmer effect */}
+                    <span className="absolute left-0 bottom-0 w-full h-0.5 overflow-hidden rounded-full">
+                      <span className="absolute inset-0 w-8 bg-gradient-to-r from-transparent via-white to-transparent opacity-60 animate-[shimmer_3s_ease-in-out_infinite]"></span>
+                    </span>
+                    
+                    {/* Wave effect on hover */}
+                    <span className="absolute left-0 bottom-0 w-full h-1 bg-gradient-to-r from-yellow-400/0 via-yellow-400/40 to-yellow-400/0 group-hover:animate-[wave_1s_ease-in-out] opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
+                  </span>
                 </div>
               </div>
             </div>

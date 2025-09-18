@@ -38,8 +38,8 @@ export function LandingPage() {
                 Pixel Banana
               </h1>
               <p className="text-xl text-gray-300 mb-8 max-w-2xl mx-auto leading-relaxed">
-                Transform your ideas into stunning visuals with our AI-powered image generation tool. 
-                Create from text descriptions or edit existing images with advanced AI technology.
+              Transform your ideas into stunning visuals with our AI-powered image generation tool. 
+              Create from text descriptions or edit existing images with advanced AI technology.
               </p>
             </div>
 
@@ -99,8 +99,26 @@ export function LandingPage() {
 
             {/* Footer text */}
             <div className="mt-12 pt-8 border-t border-white/10">
-              <p className="text-gray-400 text-lg font-light tracking-wide">
-                Made by Mani
+              <p className="text-gray-400 text-lg font-light tracking-wide group cursor-default">
+                <span className="relative inline-block hover:text-white transition-all duration-500 hover:scale-105">
+                  Made by Mani
+                  
+                  {/* Base glow layer */}
+                  <span className="absolute left-0 bottom-0 w-full h-0.5 bg-yellow-400/20 animate-[glow-pulse_2s_ease-in-out_infinite]"></span>
+                  
+                  {/* Flowing gradient layer */}
+                  <span className="absolute left-0 bottom-0 w-full h-0.5 overflow-hidden rounded-full">
+                    <span className="absolute inset-0 w-full bg-gradient-to-r from-transparent via-yellow-400 to-transparent animate-[flowing_2.5s_ease-in-out_infinite]"></span>
+                  </span>
+                  
+                  {/* Shimmer effect */}
+                  <span className="absolute left-0 bottom-0 w-full h-0.5 overflow-hidden rounded-full">
+                    <span className="absolute inset-0 w-8 bg-gradient-to-r from-transparent via-white to-transparent opacity-60 animate-[shimmer_3s_ease-in-out_infinite]"></span>
+                  </span>
+                  
+                  {/* Wave effect on hover */}
+                  <span className="absolute left-0 bottom-0 w-full h-1 bg-gradient-to-r from-yellow-400/0 via-yellow-400/40 to-yellow-400/0 group-hover:animate-[wave_1s_ease-in-out] opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
+                </span>
               </p>
             </div>
           </div>

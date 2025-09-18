@@ -9,7 +9,6 @@
     "start": "next start"
   },
   "dependencies": {
-    "@fal-ai/client": "latest",
     "@hookform/resolvers": "^3.10.0",
     "@paper-design/shaders-react": "latest",
     "@radix-ui/react-accordion": "1.2.2",

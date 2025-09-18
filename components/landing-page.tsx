@@ -31,12 +31,11 @@ export function LandingPage() {
       {/* Content */}
       <div className="relative z-10 flex-1 flex items-center justify-center p-6">
         <div className="max-w-4xl w-full text-center">
-          <div className="bg-black/70 backdrop-blur-sm border-0 p-12 rounded-xl">
+          <div className="bg-black/30 backdrop-blur-lg border border-white/10 p-12 rounded-2xl shadow-2xl">
             {/* Hero Section */}
             <div className="mb-8">
-              <h1 className="text-6xl font-bold text-white mb-6 font-mono">
-                v0 Nano Banana
-                <span className="block text-3xl text-yellow-400 mt-2">Starter</span>
+              <h1 className="text-6xl font-bold text-white mb-6 font-mono tracking-wider">
+                nano banana
               </h1>
               <p className="text-xl text-gray-300 mb-8 max-w-2xl mx-auto leading-relaxed">
                 Transform your ideas into stunning visuals with our AI-powered image generation tool. 
@@ -46,8 +45,8 @@ export function LandingPage() {
 
             {/* Features Grid */}
             <div className="grid md:grid-cols-3 gap-6 mb-12">
-              <div className="bg-black/40 p-6 rounded-lg border border-yellow-400/20">
-                <div className="flex items-center justify-center w-12 h-12 bg-yellow-400/20 rounded-lg mb-4 mx-auto">
+              <div className="bg-black/20 backdrop-blur-md p-6 rounded-xl border border-white/10 shadow-2xl hover:bg-black/30 transition-all duration-300 hover:scale-105">
+                <div className="flex items-center justify-center w-12 h-12 bg-yellow-400/20 rounded-lg mb-4 mx-auto backdrop-blur-sm">
                   <Sparkles className="w-6 h-6 text-yellow-400" />
                 </div>
                 <h3 className="text-lg font-semibold text-white mb-2">Text-to-Image</h3>
@@ -56,8 +55,8 @@ export function LandingPage() {
                 </p>
               </div>
 
-              <div className="bg-black/40 p-6 rounded-lg border border-yellow-400/20">
-                <div className="flex items-center justify-center w-12 h-12 bg-yellow-400/20 rounded-lg mb-4 mx-auto">
+              <div className="bg-black/20 backdrop-blur-md p-6 rounded-xl border border-white/10 shadow-2xl hover:bg-black/30 transition-all duration-300 hover:scale-105">
+                <div className="flex items-center justify-center w-12 h-12 bg-yellow-400/20 rounded-lg mb-4 mx-auto backdrop-blur-sm">
                   <ImageIcon className="w-6 h-6 text-yellow-400" />
                 </div>
                 <h3 className="text-lg font-semibold text-white mb-2">Image-to-Image</h3>
@@ -66,8 +65,8 @@ export function LandingPage() {
                 </p>
               </div>
 
-              <div className="bg-black/40 p-6 rounded-lg border border-yellow-400/20">
-                <div className="flex items-center justify-center w-12 h-12 bg-yellow-400/20 rounded-lg mb-4 mx-auto">
+              <div className="bg-black/20 backdrop-blur-md p-6 rounded-xl border border-white/10 shadow-2xl hover:bg-black/30 transition-all duration-300 hover:scale-105">
+                <div className="flex items-center justify-center w-12 h-12 bg-yellow-400/20 rounded-lg mb-4 mx-auto backdrop-blur-sm">
                   <Zap className="w-6 h-6 text-yellow-400" />
                 </div>
                 <h3 className="text-lg font-semibold text-white mb-2">Lightning Fast</h3>
@@ -84,7 +83,7 @@ export function LandingPage() {
                   size="lg" 
                   className="bg-yellow-400 hover:bg-yellow-500 text-black font-semibold px-8 py-3 text-lg group"
                 >
-                  Get Started
+                  Explore 
                   <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
                 </Button>
               </Link>
@@ -99,9 +98,9 @@ export function LandingPage() {
             </div>
 
             {/* Footer text */}
-            <div className="mt-12 pt-8 border-t border-yellow-400/20">
-              <p className="text-gray-500 text-sm">
-                Powered by advanced AI technology • Open source • Built with Next.js
+            <div className="mt-12 pt-8 border-t border-white/10">
+              <p className="text-gray-400 text-lg font-light tracking-wide">
+                Made by Mani
               </p>
             </div>
           </div>

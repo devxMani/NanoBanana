@@ -349,7 +349,7 @@ export function ImageCombiner() {
         <div className="max-w-6xl w-full">
           <div className="bg-black/70 backdrop-blur-sm border-0 p-8 h-full rounded-xl">
             <div className="mb-8 flex items-center justify-between">
-              <h1 className="text-2xl font-bold text-white">v0 Nano Banana Starter</h1>
+              <h1 className="text-2xl font-bold text-white font-mono tracking-wider">Nano Banana</h1>
               <Link href="/">
                 <Button 
                   variant="outline" 
@@ -558,7 +558,7 @@ export function ImageCombiner() {
                 <Button
                   onClick={generateImage}
                   disabled={!canGenerate || isLoading}
-                  className="w-full h-12 text-base font-semibold bg-white text-black hover:bg-gray-200 rounded"
+                  className="w-full h-12 text-base font-semibold bg-yellow-400 hover:bg-yellow-500 text-black rounded-xl transition-all duration-300 hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 shadow-lg hover:shadow-yellow-400/25"
                 >
                   {isLoading ? (
                     <>{mode === "text-to-image" ? "Generating..." : "Running..."}</>
@@ -678,22 +678,9 @@ export function ImageCombiner() {
 
             <div className="mt-6 pt-4 border-t border-gray-600/50">
               <div className="flex items-center justify-center">
-                <a
-                  href="#"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-sm text-gray-400 hover:text-white transition-colors duration-200 flex items-center gap-2"
-                >
-                  <span>open in v0</span>
-                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
-                    />
-                  </svg>
-                </a>
+                <div className="text-lg text-gray-400 font-light tracking-wide">
+                  Made by Mani
+                </div>
               </div>
             </div>
           </div>
